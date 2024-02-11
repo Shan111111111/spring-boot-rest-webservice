@@ -1,13 +1,14 @@
 package com.shantesh.springbootrestwebservice;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootRestWebserviceApplicationTests {
+public class SpringBootRestWebserviceApplicationTests {
 
 	@Test
-	void contextLoads() {
+    public void contextLoads() {
 	}
 
 }
