@@ -1,8 +1,7 @@
 package com.shantesh.springbootrestwebservice.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +20,18 @@ public class UserResource {
 
     //retrieveUser(int id)
 
+    @GetMapping("/users/{id}")
+    public User retrieveAllUsers(@PathVariable int id){
+        return userDaoService.findOne(id);
+    }
+
+    //CREATED
+    //input --details of user
+    //output --CREATED & Return th created URI
+
+    @PostMapping("/users")
+    public void retrieveAllUsers(@RequestBody User user){
+         userDaoService.saveUser(user);
+    }
 
 }
