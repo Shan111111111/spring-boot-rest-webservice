@@ -1,8 +1,11 @@
 package com.shantesh.springbootrestwebservice.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,8 +33,12 @@ public class UserResource {
     //output --CREATED & Return th created URI
 
     @PostMapping("/users")
-    public void retrieveAllUsers(@RequestBody User user){
-         userDaoService.saveUser(user);
+    public ResponseEntity<Object> retrieveAllUsers(@RequestBody User user){
+         User savedUser = userDaoService.saveUser(user);
+
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
 }
