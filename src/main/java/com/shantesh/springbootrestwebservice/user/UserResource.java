@@ -1,5 +1,6 @@
 package com.shantesh.springbootrestwebservice.user;
 
+import com.shantesh.springbootrestwebservice.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,13 @@ public class UserResource {
 
     @GetMapping("/users/{id}")
     public User retrieveAllUsers(@PathVariable int id){
-        return userDaoService.findOne(id);
+        User user = userDaoService.findOne(id);
+
+        if (user == null){
+            throw new UserNotFoundException("id -" + id);
+        }
+        return user;
+
     }
 
     //CREATED
