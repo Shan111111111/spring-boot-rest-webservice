@@ -1,16 +1,37 @@
 package com.shantesh.springbootrestwebservice.user;
 
+import com.shantesh.springbootrestwebservice.user.post.Post;
+
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private Integer id;
     private String name;
     private Date birthDate;
 
+    private List<Post>   posts;
+
+
     public User(Integer id, String name, Date birthDate) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+    }
+
+    public User(Integer id, String name, Date birthDate, List<Post> posts) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.posts = posts;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Integer getId() {
@@ -44,6 +65,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
+                ", posts=" + posts +
                 '}';
     }
 
