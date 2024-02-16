@@ -2,16 +2,22 @@ package com.shantesh.springbootrestwebservice.user;
 
 import com.shantesh.springbootrestwebservice.user.post.Post;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
 public class User {
     private Integer id;
+    @Size(min = 2, message = "Size must be greater than 2 chars")
     private String name;
+    @Past
     private Date birthDate;
 
     private List<Post>   posts;
 
+    public User() {
+    }
 
     public User(Integer id, String name, Date birthDate) {
         this.id = id;

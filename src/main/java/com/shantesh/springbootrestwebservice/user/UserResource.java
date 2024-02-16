@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class UserResource {
     //output --CREATED & Return th created URI
 
     @PostMapping("/users")
-    public ResponseEntity<Object> retrieveAllUsers(@RequestBody User user){
+    public ResponseEntity<Object> retrieveAllUsers(@Valid @RequestBody User user){
          User savedUser = userDaoService.saveUser(user);
 
 
