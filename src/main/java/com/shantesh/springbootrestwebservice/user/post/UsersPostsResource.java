@@ -25,12 +25,12 @@ public class UsersPostsResource {
 
     //retrieveUser(int id)
 
-    @GetMapping("/users/{id}/posts/{id}")
-    public Post retrieveAllUsers(@PathVariable int id){
-        Post post = usersPostsDaoService.findOne(id);
+    @GetMapping("/users/{id}/posts/{pid}")
+    public Post retrieveAllUsers(@PathVariable(name = "pid") int pid){
+        Post post = usersPostsDaoService.findOne(pid);
 
         if (post == null){
-            throw new PostNotFoundException("id -" + id);
+            throw new PostNotFoundException("id -" + pid);
         }
         return post;
 
