@@ -25,12 +25,12 @@ public class UsersPostsResource {
 
     //retrieveUser(int id)
 
-    @GetMapping("/users/{id}/posts/{pid}")
-    public Post retrieveAllUsers(@PathVariable(name = "pid") int pid){
-        Post post = usersPostsDaoService.findOne(pid);
+    @GetMapping("/users/{id}/posts/{id}")
+    public Post retrieveAllUsers(@PathVariable int id){
+        Post post = usersPostsDaoService.findOne(id);
 
         if (post == null){
-            throw new PostNotFoundException("id -" + pid);
+            throw new PostNotFoundException("id -" + id);
         }
         return post;
 
@@ -42,7 +42,7 @@ public class UsersPostsResource {
 
     @PostMapping("/users/{id}/posts")
     public ResponseEntity<Object> retrieveAllUsers(@RequestBody Post post){
-         Post  savedPost = usersPostsDaoService.savePost(post);
+        Post  savedPost = usersPostsDaoService.savePost(post);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedPost.getId()).toUri();
         return ResponseEntity.created(uri).build();
