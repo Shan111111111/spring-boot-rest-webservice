@@ -1,17 +1,23 @@
 package com.shantesh.springbootrestwebservice.user;
 
-import com.shantesh.springbootrestwebservice.user.post.Post;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 @ApiModel(description = "All details about the User")
+@Entity
 public class User {
+
+    @Id
+    @GeneratedValue
     private Integer id;
+
     @Size(min = 2, message = "Size must be greater than 2 chars")
     @ApiModelProperty(notes = "name should have at least 2 characters")
     private String name;
@@ -19,7 +25,7 @@ public class User {
     @ApiModelProperty(notes = "Birth date should be in the past")
     private Date birthDate;
 
-    private List<Post>   posts;
+
 
     public User() {
     }
@@ -28,21 +34,6 @@ public class User {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
-    }
-
-    public User(Integer id, String name, Date birthDate, List<Post> posts) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.posts = posts;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
     }
 
     public Integer getId() {
@@ -76,7 +67,6 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
-                ", posts=" + posts +
                 '}';
     }
 
