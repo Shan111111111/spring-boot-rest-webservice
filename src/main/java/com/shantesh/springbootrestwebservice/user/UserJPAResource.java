@@ -1,0 +1,76 @@
+package com.shantesh.springbootrestwebservice.user;
+
+import com.shantesh.springbootrestwebservice.user.exception.UserNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+@RestController
+public class UserJPAResource {
+    @Autowired
+    private UserDaoService userDaoService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    //GEt /users
+
+    //retrieveAllUsers
+    @GetMapping("/jpa/users")
+    public List<User> retrieveAllUsers(){
+        return userRepository.findAll();
+    }
+
+    //retrieveUser(int id)
+
+    @GetMapping("/jpa/users/{id}")
+    public Resource<User> retrieveUser(@PathVariable int id){
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (!optionalUser.isPresent()){
+            throw new UserNotFoundException("id -" + id);
+        }
+        //"all-users", SERVER_PATH + "/users"
+        // retrieveAllUsers
+        Resource<User> resource = new Resource<User>(optionalUser.get());
+        ControllerLinkBuilder linkTo =  linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        resource.add(linkTo.withRel("all-users"));
+
+        return resource;
+
+    }
+
+    //CREATED
+    //input --details of user
+    //output --CREATED & Return th created URI
+
+    @PostMapping("/jpa/users")
+    public ResponseEntity<Object> retrieveAllUsers(@Valid @RequestBody User user){
+        User savedUser = userDaoService.saveUser(user);
+
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/jpa/users/{id}")
+    public void deleteUser(@PathVariable int id){
+        User user = userDaoService.deleteOne(id);
+
+        if (user == null){
+            throw new UserNotFoundException("id -" + id);
+        }
+
+    }
+}
