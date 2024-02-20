@@ -19,9 +19,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class UserJPAResource {
     @Autowired
-    private UserDaoService userDaoService;
-
-    @Autowired
     private UserRepository userRepository;
 
     //GEt /users
@@ -57,7 +54,7 @@ public class UserJPAResource {
 
     @PostMapping("/jpa/users")
     public ResponseEntity<Object> retrieveAllUsers(@Valid @RequestBody User user){
-        User savedUser = userDaoService.saveUser(user);
+        User savedUser = userRepository.save(user);
 
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.getId()).toUri();
@@ -66,11 +63,8 @@ public class UserJPAResource {
 
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
-        User user = userDaoService.deleteOne(id);
+        userRepository.deleteById(id);
 
-        if (user == null){
-            throw new UserNotFoundException("id -" + id);
-        }
 
     }
 }
