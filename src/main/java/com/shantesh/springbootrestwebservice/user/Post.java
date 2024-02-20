@@ -1,5 +1,6 @@
 package com.shantesh.springbootrestwebservice.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Post {
     private Integer Id;
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private  User user;
 
     public Integer getId() {
